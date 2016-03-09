@@ -1,11 +1,3 @@
-use std::mem;
-
-fn swap_cell<T : Clone>(seq : &mut [T], l_index : usize, r_index : usize) {
-    let mut tmp = seq[l_index].clone();
-    mem::swap(&mut tmp, &mut seq[r_index]);
-    mem::swap(&mut tmp, &mut seq[l_index]);
-}
-
 fn calculate_permutation<T : Ord + Clone>(seq : &mut [T], f : &Fn(&T, &T) -> bool) -> bool {
     if seq.len() < 2 {
         return false;
@@ -22,7 +14,7 @@ fn calculate_permutation<T : Ord + Clone>(seq : &mut [T], f : &Fn(&T, &T) -> boo
                 dest_index -= 1;
             }
 
-            swap_cell(seq, back_index, dest_index);
+            seq.swap(back_index, dest_index);
             seq[next_back_index..].reverse();
             return true;
         }
