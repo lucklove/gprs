@@ -1,4 +1,4 @@
-fn calculate_permutation<T : Ord + Clone>(seq : &mut [T], f : &Fn(&T, &T) -> bool) -> bool {
+fn calculate_permutation<T : Ord>(seq : &mut [T], comparator : &Fn(&T, &T) -> bool) -> bool {
     if seq.len() < 2 {
         return false;
     }
@@ -8,9 +8,9 @@ fn calculate_permutation<T : Ord + Clone>(seq : &mut [T], f : &Fn(&T, &T) -> boo
         let next_back_index = back_index;
         back_index -= 1;
 
-        if f(&seq[back_index], &seq[next_back_index]) {
+        if comparator(&seq[back_index], &seq[next_back_index]) {
             let mut dest_index = seq.len() - 1;
-            while !f(&seq[back_index], &seq[dest_index]) {
+            while !comparator(&seq[back_index], &seq[dest_index]) {
                 dest_index -= 1;
             }
 
@@ -26,10 +26,10 @@ fn calculate_permutation<T : Ord + Clone>(seq : &mut [T], f : &Fn(&T, &T) -> boo
     }
 }
 
-pub fn prev_permutation<T : Ord + Clone>(seq : &mut [T]) -> bool {
+pub fn prev_permutation<T : Ord>(seq : &mut [T]) -> bool {
     calculate_permutation(seq, &|l : &T, r : &T| { l > r })
 }
 
-pub fn next_permutation<T : Ord + Clone>(seq : &mut [T]) -> bool {
+pub fn next_permutation<T : Ord>(seq : &mut [T]) -> bool {
     calculate_permutation(seq, &|l : &T, r : &T| { l < r })
 }
