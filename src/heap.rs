@@ -49,6 +49,16 @@ pub fn push_heap<T : Ord>(seq : &mut [T]) {
     }
 }
 
+pub fn pop_heap<T : Ord>(seq : &mut [T]) {
+    let len = seq.len();
+    if len < 2 {
+        return;
+    }
+
+    seq.swap(0, len - 1);
+    fix_heap(&mut seq[0..len-1], 0);
+}
+
 pub fn make_heap<T : Ord>(seq : &mut [T]) {
     if seq.len() < 2 {
         return;

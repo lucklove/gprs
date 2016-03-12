@@ -3,6 +3,7 @@ extern crate gprs;
 use gprs::heap::make_heap;
 use gprs::heap::sort_heap;
 use gprs::heap::push_heap;
+use gprs::heap::pop_heap;
 
 #[test]
 fn test_make_heap() {
@@ -40,4 +41,28 @@ fn test_push_heap() {
     v.push(5);
     push_heap(&mut v);
     assert_eq!(v, vec![5, 4, 2, 1, 3]);
+}
+
+#[test]
+fn test_pop_heap() {
+    let mut v = vec![5, 4, 2, 1, 3];
+
+    pop_heap(&mut v);
+    assert_eq!(v, vec![4, 3, 2, 1, 5]);
+    v.remove(4);
+
+    pop_heap(&mut v);
+    assert_eq!(v, vec![3, 1, 2, 4]);    
+    v.remove(3);
+
+    pop_heap(&mut v);
+    assert_eq!(v, vec![2, 1, 3]);    
+    v.remove(2);
+
+    pop_heap(&mut v);
+    assert_eq!(v, vec![1, 2]);    
+    v.remove(1);
+
+    pop_heap(&mut v);
+    assert_eq!(v, vec![1]);    
 }
