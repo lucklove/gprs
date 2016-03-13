@@ -26,10 +26,17 @@ fn calculate_permutation<T : Ord>(seq : &mut [T], comparator : &Fn(&T, &T) -> bo
     }
 }
 
-pub fn prev_permutation<T : Ord>(seq : &mut [T]) -> bool {
-    calculate_permutation(seq, &|l : &T, r : &T| { l > r })
+pub trait Permutation<T> {
+    fn prev_permutation(&mut self) -> bool;
+    fn next_permutation(&mut self) -> bool;
 }
 
-pub fn next_permutation<T : Ord>(seq : &mut [T]) -> bool {
-    calculate_permutation(seq, &|l : &T, r : &T| { l < r })
+impl<T : Ord> Permutation<T> for [T] {
+    fn prev_permutation(&mut self) -> bool {
+        calculate_permutation(self, &|l : &T, r : &T| { l > r })
+    }
+
+    fn next_permutation(&mut self) -> bool {
+        calculate_permutation(self, &|l : &T, r : &T| { l < r })
+    }
 }
