@@ -26,8 +26,28 @@ fn calculate_permutation<T : Ord>(seq : &mut [T], comparator : &Fn(&T, &T) -> bo
     }
 }
 
+/// 求slice内元素的排列组合
 pub trait Permutation<T> {
+    /// 上一个组合, 若没有更多的组合则返回false
+    /// # 用例
+    /// ```
+    /// use gprs::permutation::Permutation;
+    ///
+    /// let mut seq = vec![3, 2, 1];
+    /// assert_eq!(seq.prev_permutation(), true);
+    /// assert_eq!(seq, [3, 1, 2]);
+    /// ```
     fn prev_permutation(&mut self) -> bool;
+
+    /// 下一个组合, 若没有更多的组合则返回false
+    /// # 用例
+    /// ```
+    /// use gprs::permutation::Permutation;
+    ///
+    /// let mut seq = vec![1, 2, 2];
+    /// assert_eq!(seq.next_permutation(), true);
+    /// assert_eq!(seq, [2, 1, 2]);
+    /// ```
     fn next_permutation(&mut self) -> bool;
 }
 

@@ -158,24 +158,24 @@ impl<'a, T : Ord + 'a> HeapComparator<'a, T> {
     /// 该slice必须满足除最后一个元素外其他元素构成一个堆
     /// # 用例
     /// ```
-    ///     use gprs::heap::HeapOperation;
-    ///     
-    ///     let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
+    /// use gprs::heap::HeapOperation;
+    /// 
+    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
     ///
-    ///     let mut v = vec![5];
-    ///     
-    ///     v.push(4);
-    ///     v.compare_by(&comp).push_heap();
-    ///     
-    ///     v.push(3);
-    ///     v.compare_by(&comp).push_heap();
+    /// let mut v = vec![5];
+    /// 
+    /// v.push(4);
+    /// v.compare_by(&comp).push_heap();
+    /// 
+    /// v.push(3);
+    /// v.compare_by(&comp).push_heap();
     ///
-    ///     v.push(2);
-    ///     v.compare_by(&comp).push_heap();
+    /// v.push(2);
+    /// v.compare_by(&comp).push_heap();
     ///
-    ///     v.push(1);
-    ///     v.compare_by(&comp).push_heap();
-    ///     assert_eq!(v, vec![1, 2, 4, 5, 3]);
+    /// v.push(1);
+    /// v.compare_by(&comp).push_heap();
+    /// assert_eq!(v, vec![1, 2, 4, 5, 3]);
     /// ```
     pub fn push_heap(&mut self) {
         push_heap(self.sequence, self.comparator);
@@ -184,13 +184,13 @@ impl<'a, T : Ord + 'a> HeapComparator<'a, T> {
     /// 将堆根部元素移动到slice末尾, 并将剩下元素构造成堆
     /// # 用例
     /// ```
-    ///     use gprs::heap::HeapOperation;
+    /// use gprs::heap::HeapOperation;
     ///
-    ///     let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
-    ///     
-    ///     let mut v = vec![1, 2, 3, 4, 5];
-    ///     v.compare_by(&comp).pop_heap();
-    ///     assert_eq!(v, vec![2, 4, 3, 5, 1]);             // 堆根部元素被移动到了slice末尾
+    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
+    /// 
+    /// let mut v = vec![1, 2, 3, 4, 5];
+    /// v.compare_by(&comp).pop_heap();
+    /// assert_eq!(v, vec![2, 4, 3, 5, 1]);             // 堆根部元素被移动到了slice末尾
     /// ```
     pub fn pop_heap(&mut self) {
         pop_heap(self.sequence, self.comparator);
@@ -199,14 +199,14 @@ impl<'a, T : Ord + 'a> HeapComparator<'a, T> {
     /// 对已构成堆的slice进行排序
     /// # 用例
     /// ```
-    ///     use gprs::heap::HeapOperation;
+    /// use gprs::heap::HeapOperation;
     ///
-    ///     let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
+    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
     ///
-    ///     let mut v = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3];
-    ///     v.compare_by(&comp).make_heap();                // 先构造堆
-    ///     v.compare_by(&comp).sort_heap();                // 再排序
-    ///     assert_eq!(v, vec![9, 6, 5, 5, 4, 3, 3, 2, 1, 1]);
+    /// let mut v = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3];
+    /// v.compare_by(&comp).make_heap();                // 先构造堆
+    /// v.compare_by(&comp).sort_heap();                // 再排序
+    /// assert_eq!(v, vec![9, 6, 5, 5, 4, 3, 3, 2, 1, 1]);
     /// ```
     pub fn sort_heap(&mut self) {
         sort_heap(self.sequence, self.comparator);
@@ -220,52 +220,52 @@ pub trait HeapOperation<'a, T> {
     /// 直接构造堆(默认为最大堆)
     /// # 用例
     /// ```
-    ///     use gprs::heap::HeapOperation;
+    /// use gprs::heap::HeapOperation;
     ///
-    ///     let mut v = vec![1, 3, 4, 5, 2];
-    ///     v.make_heap();
-    ///     assert_eq!(v, vec![5, 3, 4, 1, 2]);
+    /// let mut v = vec![1, 3, 4, 5, 2];
+    /// v.make_heap();
+    /// assert_eq!(v, vec![5, 3, 4, 1, 2]);
     /// ```
     fn make_heap(&mut self);
 
     /// 对堆进行排序(默认为最大堆)
     /// # 用例
     /// ```
-    ///     use gprs::heap::HeapOperation;
+    /// use gprs::heap::HeapOperation;
     ///
-    ///     let mut v = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3];
-    ///     v.make_heap();      // 先构造堆
-    ///     v.sort_heap();      // 然后才能排序
-    ///     assert_eq!(v, vec![1, 1, 2, 3, 3, 4, 5, 5, 6, 9]);
+    /// let mut v = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3];
+    /// v.make_heap();      // 先构造堆
+    /// v.sort_heap();      // 然后才能排序
+    /// assert_eq!(v, vec![1, 1, 2, 3, 3, 4, 5, 5, 6, 9]);
     /// ```
     fn sort_heap(&mut self);
 
     /// 将一个末尾加入一个新元素的堆重新构造成堆
     /// # 用例
     /// ```
-    ///     use gprs::heap::HeapOperation;
+    /// use gprs::heap::HeapOperation;
     ///
-    ///     let mut v = vec![1];
-    ///     v.push(2);
-    ///     v.push_heap();
-    ///     v.push(3);
-    ///     v.push_heap();
-    ///     v.push(4);
-    ///     v.push_heap();
-    ///     v.push(5);
-    ///     v.push_heap();
-    ///     assert_eq!(v, vec![5, 4, 2, 1, 3]);
+    /// let mut v = vec![1];
+    /// v.push(2);
+    /// v.push_heap();
+    /// v.push(3);
+    /// v.push_heap();
+    /// v.push(4);
+    /// v.push_heap();
+    /// v.push(5);
+    /// v.push_heap();
+    /// assert_eq!(v, vec![5, 4, 2, 1, 3]);
     /// ```
     fn push_heap(&mut self);
 
     /// 将堆根部元素移动到slice末尾, 并将剩下元素构造成堆
     /// # 用例
     /// ```
-    ///     use gprs::heap::HeapOperation;
+    /// use gprs::heap::HeapOperation;
     ///
-    ///     let mut v = vec![5, 4, 3, 2, 1];
-    ///     v.pop_heap();
-    ///     assert_eq!(v, vec![4, 2, 3, 1, 5]);
+    /// let mut v = vec![5, 4, 3, 2, 1];
+    /// v.pop_heap();
+    /// assert_eq!(v, vec![4, 2, 3, 1, 5]);
     fn pop_heap(&mut self);
 }
 
