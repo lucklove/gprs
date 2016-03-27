@@ -1,5 +1,2 @@
-rust小算法, 模仿C++ STL  
-文档:  
-```
-cargo doc --open
-```
+rust工具库  
+[我是文档](http://lucklove.github.io/gprs/)  
