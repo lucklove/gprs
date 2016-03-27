@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `HeapOperation` trait in crate `gprs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, HeapOperation">
+
+    <title>gprs::heap::HeapOperation - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>gprs</a>::<wbr><a href='index.html'>heap</a></p><script>window.sidebarCurrent = {name: 'HeapOperation', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>gprs</a>::<wbr><a href='index.html'>heap</a>::<wbr><a class='trait' href=''>HeapOperation</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-86' class='srclink' href='../../src/gprs/src/heap.rs.html#216-270' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait HeapOperation&lt;'a, T&gt; {
+    fn <a href='#tymethod.compare_by' class='fnname'>compare_by</a>(&amp;'a mut self, &amp;'a <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;T, &amp;T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>) -&gt; <a class='struct' href='../../gprs/heap/struct.HeapComparator.html' title='gprs::heap::HeapComparator'>HeapComparator</a>&lt;'a, T&gt;;
+    fn <a href='#tymethod.make_heap' class='fnname'>make_heap</a>(&amp;mut self);
+    fn <a href='#tymethod.sort_heap' class='fnname'>sort_heap</a>(&amp;mut self);
+    fn <a href='#tymethod.push_heap' class='fnname'>push_heap</a>(&amp;mut self);
+    fn <a href='#tymethod.pop_heap' class='fnname'>pop_heap</a>(&amp;mut self);
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.compare_by' class='method stab '><code>fn <a href='#tymethod.compare_by' class='fnname'>compare_by</a>(&amp;'a mut self, &amp;'a <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;T, &amp;T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>) -&gt; <a class='struct' href='../../gprs/heap/struct.HeapComparator.html' title='gprs::heap::HeapComparator'>HeapComparator</a>&lt;'a, T&gt;</code></h3><div class='docblock'><p>提供用户自己的比较函数以选择构造最大堆/最小堆</p>
+</div><h3 id='tymethod.make_heap' class='method stab '><code>fn <a href='#tymethod.make_heap' class='fnname'>make_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>直接构造堆(默认为最大堆)</p>
+
+<h1 id='用例' class='section-header'><a href='#用例'>用例</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>3</span>, <span class='number'>4</span>, <span class='number'>5</span>, <span class='number'>2</span>];
+<span class='ident'>v</span>.<span class='ident'>make_heap</span>();
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>3</span>, <span class='number'>4</span>, <span class='number'>1</span>, <span class='number'>2</span>]);</pre>
+</div><h3 id='tymethod.sort_heap' class='method stab '><code>fn <a href='#tymethod.sort_heap' class='fnname'>sort_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>对堆进行排序(默认为最大堆)</p>
+
+<h1 id='用例-1' class='section-header'><a href='#用例-1'>用例</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>3</span>, <span class='number'>1</span>, <span class='number'>4</span>, <span class='number'>1</span>, <span class='number'>5</span>, <span class='number'>9</span>, <span class='number'>2</span>, <span class='number'>6</span>, <span class='number'>5</span>, <span class='number'>3</span>];
+<span class='ident'>v</span>.<span class='ident'>make_heap</span>();      <span class='comment'>// 先构造堆</span>
+<span class='ident'>v</span>.<span class='ident'>sort_heap</span>();      <span class='comment'>// 然后才能排序</span>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>3</span>, <span class='number'>4</span>, <span class='number'>5</span>, <span class='number'>5</span>, <span class='number'>6</span>, <span class='number'>9</span>]);</pre>
+</div><h3 id='tymethod.push_heap' class='method stab '><code>fn <a href='#tymethod.push_heap' class='fnname'>push_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>将一个末尾加入一个新元素的堆重新构造成堆</p>
+
+<h1 id='用例-2' class='section-header'><a href='#用例-2'>用例</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>];
+<span class='ident'>v</span>.<span class='ident'>push</span>(<span class='number'>2</span>);
+<span class='ident'>v</span>.<span class='ident'>push_heap</span>();
+<span class='ident'>v</span>.<span class='ident'>push</span>(<span class='number'>3</span>);
+<span class='ident'>v</span>.<span class='ident'>push_heap</span>();
+<span class='ident'>v</span>.<span class='ident'>push</span>(<span class='number'>4</span>);
+<span class='ident'>v</span>.<span class='ident'>push_heap</span>();
+<span class='ident'>v</span>.<span class='ident'>push</span>(<span class='number'>5</span>);
+<span class='ident'>v</span>.<span class='ident'>push_heap</span>();
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>4</span>, <span class='number'>2</span>, <span class='number'>1</span>, <span class='number'>3</span>]);</pre>
+</div><h3 id='tymethod.pop_heap' class='method stab '><code>fn <a href='#tymethod.pop_heap' class='fnname'>pop_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>将堆根部元素移动到slice末尾, 并将剩下元素构造成堆</p>
+
+<h1 id='用例-3' class='section-header'><a href='#用例-3'>用例</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>4</span>, <span class='number'>3</span>, <span class='number'>2</span>, <span class='number'>1</span>];
+<span class='ident'>v</span>.<span class='ident'>pop_heap</span>();
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>4</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>1</span>, <span class='number'>5</span>]);</pre>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;'a, T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html' title='core::cmp::Ord'>Ord</a> + 'a&gt; <a class='trait' href='../../gprs/heap/trait.HeapOperation.html' title='gprs::heap::HeapOperation'>HeapOperation</a>&lt;'a, T&gt; for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>[</a>T<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></li>
+</ul><script type="text/javascript" async
+                              src="../../implementors/gprs/heap/trait.HeapOperation.js">
+                      </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "gprs";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
