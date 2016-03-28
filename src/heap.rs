@@ -141,26 +141,37 @@ fn sort_heap<T : Ord>(seq : &mut [T], comp : &Fn(&T, &T) -> Ordering) {
     }
 }
 
-/// 用户提供自定义比函数时的堆操作
+/// Operations when user version comparator was present
 pub struct HeapComparator<'a, T : 'a> {
-    sequence : &'a mut [T],                     // 被操作的slice
-    comparator : &'a Fn(&T, &T) -> Ordering     // 用户自定义的比较函数
+    sequence : &'a mut [T],                     // slice to be operated
+    comparator : &'a Fn(&T, &T) -> Ordering     // user version comparator
 }
 
 impl<'a, T : Ord + 'a> HeapComparator<'a, T> {
-    /// 将一个无序的slice构造成堆
+    /// make heap from unordered slice
+    /// # Examples
+    /// basic usage:
+    ///
+    /// ```
+    /// use gprs::heap::HeapOperation;
+    ///
+    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // for minimum heap
+    /// let mut v = vec![5, 4, 3, 2, 1];
+    /// v.compare_by(&comp).make_heap();
+    /// assert_eq!(v, vec![1, 2, 3, 5, 4]);
+    /// ```
     pub fn make_heap(&mut self) {
         make_heap(self.sequence, self.comparator);
     }
 
-    /// 将一个slice构造成堆 
-    /// 
-    /// 该slice必须满足除最后一个元素外其他元素构成一个堆
-    /// # 用例
+    /// push a new item to a heap
+    /// # Examples
+    /// basic usage:
+    ///
     /// ```
     /// use gprs::heap::HeapOperation;
     /// 
-    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
+    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // for minimum heap
     ///
     /// let mut v = vec![5];
     /// 
@@ -181,31 +192,35 @@ impl<'a, T : Ord + 'a> HeapComparator<'a, T> {
         push_heap(self.sequence, self.comparator);
     }
 
-    /// 将堆根部元素移动到slice末尾, 并将剩下元素构造成堆
-    /// # 用例
+    /// pop an item from heap
+    /// # Examples
+    /// basic usage:
+    ///
     /// ```
     /// use gprs::heap::HeapOperation;
     ///
-    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
+    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // for minimum heap
     /// 
     /// let mut v = vec![1, 2, 3, 4, 5];
     /// v.compare_by(&comp).pop_heap();
-    /// assert_eq!(v, vec![2, 4, 3, 5, 1]);             // 堆根部元素被移动到了slice末尾
+    /// assert_eq!(v, vec![2, 4, 3, 5, 1]);             // dest item show at the end of slice
     /// ```
     pub fn pop_heap(&mut self) {
         pop_heap(self.sequence, self.comparator);
     }
 
-    /// 对已构成堆的slice进行排序
-    /// # 用例
+    /// sort a heap
+    /// # Examples
+    /// basic usage:  
+    ///
     /// ```
     /// use gprs::heap::HeapOperation;
     ///
-    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // 最小堆
+    /// let comp = |x : &i32, y : &i32| { y.cmp(x) };   // for minimum heap
     ///
     /// let mut v = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3];
-    /// v.compare_by(&comp).make_heap();                // 先构造堆
-    /// v.compare_by(&comp).sort_heap();                // 再排序
+    /// v.compare_by(&comp).make_heap();                // construct heap first
+    /// v.compare_by(&comp).sort_heap();                // sort second
     /// assert_eq!(v, vec![9, 6, 5, 5, 4, 3, 3, 2, 1, 1]);
     /// ```
     pub fn sort_heap(&mut self) {
@@ -213,59 +228,66 @@ impl<'a, T : Ord + 'a> HeapComparator<'a, T> {
     }
 }
 
+/// Heap operations by default
+/// # Examples
+/// construct maximum heap:
+///
+/// ```
+/// use gprs::heap::HeapOperation;
+///
+/// let mut v = vec![1, 3, 4, 5, 2];
+/// v.make_heap();
+/// assert_eq!(v, vec![5, 3, 4, 1, 2]);
+/// ```
+/// sort a maximum heap:
+///
+/// ```
+/// use gprs::heap::HeapOperation;
+///
+/// let mut v = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3];
+/// v.make_heap();      // construct heap first
+/// v.sort_heap();      // then sort heap
+/// assert_eq!(v, vec![1, 1, 2, 3, 3, 4, 5, 5, 6, 9]);
+/// ```
+/// push a new item to a heap:
+///
+/// ```
+/// use gprs::heap::HeapOperation;
+///
+/// let mut v = vec![1];
+/// v.push(2);
+/// v.push_heap();
+/// v.push(3);
+/// v.push_heap();
+/// v.push(4);
+/// v.push_heap();
+/// v.push(5);
+/// v.push_heap();
+/// assert_eq!(v, vec![5, 4, 2, 1, 3]);
+/// ```
+/// pop an item from a heap:
+///
+/// ```
+/// use gprs::heap::HeapOperation;
+///
+/// let mut v = vec![5, 4, 3, 2, 1];
+/// v.pop_heap();
+/// assert_eq!(v, vec![4, 2, 3, 1, 5]);     // dest item show at the end of slice
+/// ```
 pub trait HeapOperation<'a, T> {
-    /// 提供用户自己的比较函数以选择构造最大堆/最小堆
+    /// let user choice to construct neither minimum heap or maximum heap
     fn compare_by(&'a mut self, &'a Fn(&T, &T) -> Ordering) -> HeapComparator<'a, T>;
     
-    /// 直接构造堆(默认为最大堆)
-    /// # 用例
-    /// ```
-    /// use gprs::heap::HeapOperation;
-    ///
-    /// let mut v = vec![1, 3, 4, 5, 2];
-    /// v.make_heap();
-    /// assert_eq!(v, vec![5, 3, 4, 1, 2]);
-    /// ```
+    /// construct maximum heap
     fn make_heap(&mut self);
 
-    /// 对堆进行排序(默认为最大堆)
-    /// # 用例
-    /// ```
-    /// use gprs::heap::HeapOperation;
-    ///
-    /// let mut v = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3];
-    /// v.make_heap();      // 先构造堆
-    /// v.sort_heap();      // 然后才能排序
-    /// assert_eq!(v, vec![1, 1, 2, 3, 3, 4, 5, 5, 6, 9]);
-    /// ```
+    /// sort a maximum heap
     fn sort_heap(&mut self);
 
-    /// 将一个末尾加入一个新元素的堆重新构造成堆
-    /// # 用例
-    /// ```
-    /// use gprs::heap::HeapOperation;
-    ///
-    /// let mut v = vec![1];
-    /// v.push(2);
-    /// v.push_heap();
-    /// v.push(3);
-    /// v.push_heap();
-    /// v.push(4);
-    /// v.push_heap();
-    /// v.push(5);
-    /// v.push_heap();
-    /// assert_eq!(v, vec![5, 4, 2, 1, 3]);
-    /// ```
+    /// push a new item to a heap
     fn push_heap(&mut self);
 
-    /// 将堆根部元素移动到slice末尾, 并将剩下元素构造成堆
-    /// # 用例
-    /// ```
-    /// use gprs::heap::HeapOperation;
-    ///
-    /// let mut v = vec![5, 4, 3, 2, 1];
-    /// v.pop_heap();
-    /// assert_eq!(v, vec![4, 2, 3, 1, 5]);
+    /// pop an item from a heap
     fn pop_heap(&mut self);
 }
 

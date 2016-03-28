@@ -1,6 +1,6 @@
-/// 排列组合
+/// slice permutation
 pub mod permutation;
-/// 堆操作
+/// Heap operations
 pub mod heap;
-/// 序列旋转
+/// rotate slice
 pub mod rotate;
