@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["heap","堆操作"],["permutation","排列组合"],["rotate","序列旋转"]]});
+initSidebarItems({"mod":[["heap","Heap operations"],["permutation","slice permutation"],["rotate","rotate slice"]]});

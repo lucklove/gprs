@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Rotatable","为slice提供旋转操作"]]});
+initSidebarItems({"trait":[["Rotatable","Rotate slice # Examples basic usage:"]]});

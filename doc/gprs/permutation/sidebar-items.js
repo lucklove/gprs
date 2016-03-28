@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Permutation","求slice内元素的排列组合"]]});
+initSidebarItems({"trait":[["Permutation","Get all permutations from a slice # Examples get previous permutation:"]]});

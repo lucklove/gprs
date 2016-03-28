@@ -46,39 +46,37 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-86' class='srclink' href='../../src/gprs/src/heap.rs.html#216-270' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-86' class='srclink' href='../../src/gprs/heap.rs.html#277-292' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait HeapOperation&lt;'a, T&gt; {
     fn <a href='#tymethod.compare_by' class='fnname'>compare_by</a>(&amp;'a mut self, &amp;'a <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;T, &amp;T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>) -&gt; <a class='struct' href='../../gprs/heap/struct.HeapComparator.html' title='gprs::heap::HeapComparator'>HeapComparator</a>&lt;'a, T&gt;;
     fn <a href='#tymethod.make_heap' class='fnname'>make_heap</a>(&amp;mut self);
     fn <a href='#tymethod.sort_heap' class='fnname'>sort_heap</a>(&amp;mut self);
     fn <a href='#tymethod.push_heap' class='fnname'>push_heap</a>(&amp;mut self);
     fn <a href='#tymethod.pop_heap' class='fnname'>pop_heap</a>(&amp;mut self);
-}</pre>
-            <h2 id='required-methods'>Required Methods</h2>
-            <div class='methods'>
-        <h3 id='tymethod.compare_by' class='method stab '><code>fn <a href='#tymethod.compare_by' class='fnname'>compare_by</a>(&amp;'a mut self, &amp;'a <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;T, &amp;T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>) -&gt; <a class='struct' href='../../gprs/heap/struct.HeapComparator.html' title='gprs::heap::HeapComparator'>HeapComparator</a>&lt;'a, T&gt;</code></h3><div class='docblock'><p>提供用户自己的比较函数以选择构造最大堆/最小堆</p>
-</div><h3 id='tymethod.make_heap' class='method stab '><code>fn <a href='#tymethod.make_heap' class='fnname'>make_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>直接构造堆(默认为最大堆)</p>
+}</pre><div class='docblock'><p>Heap operations by default</p>
 
-<h1 id='用例' class='section-header'><a href='#用例'>用例</a></h1>
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>construct maximum heap:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>3</span>, <span class='number'>4</span>, <span class='number'>5</span>, <span class='number'>2</span>];
 <span class='ident'>v</span>.<span class='ident'>make_heap</span>();
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>3</span>, <span class='number'>4</span>, <span class='number'>1</span>, <span class='number'>2</span>]);</pre>
-</div><h3 id='tymethod.sort_heap' class='method stab '><code>fn <a href='#tymethod.sort_heap' class='fnname'>sort_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>对堆进行排序(默认为最大堆)</p>
 
-<h1 id='用例-1' class='section-header'><a href='#用例-1'>用例</a></h1>
+<p>sort a maximum heap:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>3</span>, <span class='number'>1</span>, <span class='number'>4</span>, <span class='number'>1</span>, <span class='number'>5</span>, <span class='number'>9</span>, <span class='number'>2</span>, <span class='number'>6</span>, <span class='number'>5</span>, <span class='number'>3</span>];
-<span class='ident'>v</span>.<span class='ident'>make_heap</span>();      <span class='comment'>// 先构造堆</span>
-<span class='ident'>v</span>.<span class='ident'>sort_heap</span>();      <span class='comment'>// 然后才能排序</span>
+<span class='ident'>v</span>.<span class='ident'>make_heap</span>();      <span class='comment'>// construct heap first</span>
+<span class='ident'>v</span>.<span class='ident'>sort_heap</span>();      <span class='comment'>// then sort heap</span>
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>3</span>, <span class='number'>4</span>, <span class='number'>5</span>, <span class='number'>5</span>, <span class='number'>6</span>, <span class='number'>9</span>]);</pre>
-</div><h3 id='tymethod.push_heap' class='method stab '><code>fn <a href='#tymethod.push_heap' class='fnname'>push_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>将一个末尾加入一个新元素的堆重新构造成堆</p>
 
-<h1 id='用例-2' class='section-header'><a href='#用例-2'>用例</a></h1>
+<p>push a new item to a heap:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
 
@@ -92,15 +90,23 @@
 <span class='ident'>v</span>.<span class='ident'>push</span>(<span class='number'>5</span>);
 <span class='ident'>v</span>.<span class='ident'>push_heap</span>();
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>4</span>, <span class='number'>2</span>, <span class='number'>1</span>, <span class='number'>3</span>]);</pre>
-</div><h3 id='tymethod.pop_heap' class='method stab '><code>fn <a href='#tymethod.pop_heap' class='fnname'>pop_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>将堆根部元素移动到slice末尾, 并将剩下元素构造成堆</p>
 
-<h1 id='用例-3' class='section-header'><a href='#用例-3'>用例</a></h1>
+<p>pop an item from a heap:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>heap</span>::<span class='ident'>HeapOperation</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>5</span>, <span class='number'>4</span>, <span class='number'>3</span>, <span class='number'>2</span>, <span class='number'>1</span>];
 <span class='ident'>v</span>.<span class='ident'>pop_heap</span>();
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>4</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>1</span>, <span class='number'>5</span>]);</pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>4</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>1</span>, <span class='number'>5</span>]);     <span class='comment'>// dest item show at the end of slice</span></pre>
+</div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.compare_by' class='method stab '><code>fn <a href='#tymethod.compare_by' class='fnname'>compare_by</a>(&amp;'a mut self, &amp;'a <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;T, &amp;T) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>) -&gt; <a class='struct' href='../../gprs/heap/struct.HeapComparator.html' title='gprs::heap::HeapComparator'>HeapComparator</a>&lt;'a, T&gt;</code></h3><div class='docblock'><p>let user choice to construct neither minimum heap or maximum heap</p>
+</div><h3 id='tymethod.make_heap' class='method stab '><code>fn <a href='#tymethod.make_heap' class='fnname'>make_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>construct maximum heap</p>
+</div><h3 id='tymethod.sort_heap' class='method stab '><code>fn <a href='#tymethod.sort_heap' class='fnname'>sort_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>sort a maximum heap</p>
+</div><h3 id='tymethod.push_heap' class='method stab '><code>fn <a href='#tymethod.push_heap' class='fnname'>push_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>push a new item to a heap</p>
+</div><h3 id='tymethod.pop_heap' class='method stab '><code>fn <a href='#tymethod.pop_heap' class='fnname'>pop_heap</a>(&amp;mut self)</code></h3><div class='docblock'><p>pop an item from a heap</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

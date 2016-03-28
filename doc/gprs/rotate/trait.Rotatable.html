@@ -46,22 +46,24 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-116' class='srclink' href='../../src/gprs/src/rotate.rs.html#2-13' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-116' class='srclink' href='../../src/gprs/rotate.rs.html#12-15' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Rotatable&lt;T&gt; {
     fn <a href='#tymethod.rotate' class='fnname'>rotate</a>(&amp;mut self, mid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>);
-}</pre><div class='docblock'><p>为slice提供旋转操作</p>
-</div>
-            <h2 id='required-methods'>Required Methods</h2>
-            <div class='methods'>
-        <h3 id='tymethod.rotate' class='method stab '><code>fn <a href='#tymethod.rotate' class='fnname'>rotate</a>(&amp;mut self, mid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h3><div class='docblock'><p>交换[0, mid), [mid, len)</p>
+}</pre><div class='docblock'><p>Rotate slice</p>
 
-<h1 id='用例' class='section-header'><a href='#用例'>用例</a></h1>
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>basic usage:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>rotate</span>::<span class='ident'>Rotatable</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>, <span class='number'>5</span>];
 <span class='ident'>v</span>.<span class='ident'>rotate</span>(<span class='number'>3</span>);
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>4</span>, <span class='number'>5</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>]);</pre>
+</div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.rotate' class='method stab '><code>fn <a href='#tymethod.rotate' class='fnname'>rotate</a>(&amp;mut self, mid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></h3><div class='docblock'><p>swap self[0..mid] and self[mid, self.len()]</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

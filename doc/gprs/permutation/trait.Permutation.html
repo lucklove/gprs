@@ -46,32 +46,35 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-13' class='srclink' href='../../src/gprs/src/permutation.rs.html#30-52' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-13' class='srclink' href='../../src/gprs/permutation.rs.html#49-55' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Permutation&lt;T&gt; {
     fn <a href='#tymethod.prev_permutation' class='fnname'>prev_permutation</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.next_permutation' class='fnname'>next_permutation</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
-}</pre><div class='docblock'><p>求slice内元素的排列组合</p>
-</div>
-            <h2 id='required-methods'>Required Methods</h2>
-            <div class='methods'>
-        <h3 id='tymethod.prev_permutation' class='method stab '><code>fn <a href='#tymethod.prev_permutation' class='fnname'>prev_permutation</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>上一个组合, 若没有更多的组合则返回false</p>
+}</pre><div class='docblock'><p>Get all permutations from a slice</p>
 
-<h1 id='用例' class='section-header'><a href='#用例'>用例</a></h1>
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<p>get previous permutation:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>permutation</span>::<span class='ident'>Permutation</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>seq</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>3</span>, <span class='number'>2</span>, <span class='number'>1</span>];
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>seq</span>.<span class='ident'>prev_permutation</span>(), <span class='boolval'>true</span>);
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>seq</span>, [<span class='number'>3</span>, <span class='number'>1</span>, <span class='number'>2</span>]);</pre>
-</div><h3 id='tymethod.next_permutation' class='method stab '><code>fn <a href='#tymethod.next_permutation' class='fnname'>next_permutation</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>下一个组合, 若没有更多的组合则返回false</p>
 
-<h1 id='用例-1' class='section-header'><a href='#用例-1'>用例</a></h1>
+<p>get next permutation:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>gprs</span>::<span class='ident'>permutation</span>::<span class='ident'>Permutation</span>;
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>seq</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>2</span>];
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>seq</span>.<span class='ident'>next_permutation</span>(), <span class='boolval'>true</span>);
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>seq</span>, [<span class='number'>2</span>, <span class='number'>1</span>, <span class='number'>2</span>]);</pre>
+</div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.prev_permutation' class='method stab '><code>fn <a href='#tymethod.prev_permutation' class='fnname'>prev_permutation</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>get previous permutation, if there is no more, return false</p>
+</div><h3 id='tymethod.next_permutation' class='method stab '><code>fn <a href='#tymethod.next_permutation' class='fnname'>next_permutation</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>get next permutation, if there is no more, return false</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["HeapComparator","用户提供自定义比函数时的堆操作"]],"trait":[["HeapOperation",""]]});
+initSidebarItems({"struct":[["HeapComparator","Operations when user version comparator was present"]],"trait":[["HeapOperation","Heap operations by default # Examples construct maximum heap:"]]});
